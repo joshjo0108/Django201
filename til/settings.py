@@ -9,11 +9,12 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,7 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'feed', # 'feed' HAS BEEN ADDED FROM "apps.py->name"
+# django TO BE MULTI SITES
+    'django.contrib.sites', # AFTER YOU DOWNLOAD pipenv install django-allauth
+
+# THIRD PARTIES
+    'feed',         # 'feed' HAS BEEN ADDED FROM "apps.py->name"
+    'allauth',              # AFTER YOU DOWNLOAD pipenv install django-allauth
+    'allauth.account',       # AFTER YOU DOWNLOAD pipenv install django-allauth
+    'allauth.socialaccount',    # AFTER YOU DOWNLOAD pipenv install django-allauth
 ]
 
 MIDDLEWARE = [
@@ -55,7 +63,12 @@ ROOT_URLCONF = 'til.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            # THIS WILL BE REQUIRED TO SHOW WHAT IS WRITTEN ON "homepage.html"
+            # BUT STILL CAN MAKE ANOTHER FOLDER "template" UNDER "feed"
+            # HAVING "base.html" AND EXTENDING IT TO THE FILES UNDER "feed"
+            os.path.join(PROJECT_DIR, "til/templates")
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,7 +129,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+# ALLAUTH SETTINGS
+STATIC_URL = '/static/'
+SITE_ID = 1
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "optional" # or "mandatory"
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+ACCOUNT_LOGOUT_REDIRECT = '/'
+ACCOUNT_PRESERVE_USERNAME_CASING = False # "jaewon" IS EQUAL TO "JAEWON"
+ACCOUNT_SESSION_REMEMBER = False  # REMEMBER ME FOR CERTAIN DAYS
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+ACCOUNT_USERNAME_MIN_LENGTH = 2
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend"
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

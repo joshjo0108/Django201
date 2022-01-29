@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %} Changed the title of the homepage {% endblock %}
+
+{%block body%}
+    <!-- "posts" IS FROM "views.py" -> " context_object_name = "posts" " -->
+    {% for post in posts %}
+        <!-- FROM "models.py" -->
+        {{post.text}} written on {{post.date}}
+        <hr>
+    {%endfor%}
+{%endblock%}
