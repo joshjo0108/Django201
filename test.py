@@ -12,4 +12,7 @@
     # ADDING LOG IN / LOG OUT / PASSWORD
         # pipenv install django-allauth
 
-    
+# MAKE profiles FOLDER
+    # python3 manage.py startapp profiles   
+    # python3 manage.py makemigrations
+    # python3 manage.py migrate 
