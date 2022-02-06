@@ -16,3 +16,6 @@
     # python3 manage.py startapp profiles   
     # python3 manage.py makemigrations
     # python3 manage.py migrate 
+
+# WHEN MAKING javascript file
+    #  python3 manage.py collectstatic
