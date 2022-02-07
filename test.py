@@ -19,3 +19,12 @@
 
 # WHEN MAKING javascript file
     #  python3 manage.py collectstatic
+
+
+# CREATE A FOLDER followers
+    #  python3 manage.py startapp followers
+    # THEN ADD "followers" ON "INSTALLED_APPS = []" IN "settings.py"
+
+# AFTER UPDATING ON "admin.py"
+    # RUN "python3 manage.py makemigrations"
+    # python3 manage.py migrate

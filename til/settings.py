@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sites', # AFTER YOU DOWNLOAD pipenv install django-allauth
 
 # THIRD PARTIES
+    'followers',
     'profiles',
     'feed',         # 'feed' HAS BEEN ADDED FROM "apps.py->name"
     'allauth',              # AFTER YOU DOWNLOAD pipenv install django-allauth
