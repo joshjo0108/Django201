@@ -84,6 +84,8 @@ $(document).on("click", ".js-toggle-modal", function(e) {
 })
 .on("click", ".js-follow", function(e) {
     e.preventDefault();
+// CACHING OUT
+// FROM "detail.html" IN ONE OF THE CLASS USED
     const action = $(this).attr("data-action")
 
     $.ajax({
@@ -93,6 +95,7 @@ $(document).on("click", ".js-toggle-modal", function(e) {
             action: action,
             username: $(this).data("username"),
         },
+        // data IN FORM OF JSON
         success: (data) => {
             $(".js-follow-text").text(data.wording)
             if(action == "follow") {
