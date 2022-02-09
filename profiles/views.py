@@ -15,12 +15,21 @@ class ProfileDetailView(DetailView):
     # COMING FROM "<str:username>/" <- IN "profiles/urls.py"
     slug_url_kwarg = "username"
 
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         # GETS THE OBJECT "user"
         user = self.get_object()
         context = super().get_context_data(**kwargs)
+    # THIS IS USED IN "detail.html" AS "{{total_posts}}"
         context['total_posts'] = Post.objects.filter(author = user).count()
         # context['total_followers'] = ...
+        if self.request.user.is_authenticated:
+        # USED IN "detail.html" AS "{%if you_follow%}"
+        # THIS WILL RETURN "BOOLEAN"
+            context['you_follow'] = Follower.objects.filter(following=user, followed_by=self.request.user).exists()
         return context
 
 class FollowView(LoginRequiredMixin, View):
